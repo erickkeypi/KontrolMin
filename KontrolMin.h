@@ -16,6 +16,8 @@ limitations under the License.
 last revision april/19/2019
 */
 
+#ifndef _KONTROL_MIN_H
+#define _KONTROL_MIN_H
 #include "Arduino.h"
 
 class KontrolMin {
@@ -38,3 +40,4 @@ public:
   void setEndTransmitionCharacter(char);
   void flush();
 };
+#endif
