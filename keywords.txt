@@ -1,0 +1,6 @@
+KontrolMin	KEYWORD1
+update	KEYWORD2
+getData	KEYWORD2
+flush	KEYWORD2
+setEndTransmitionCharacter	KEYWORD2
+addListener	KEYWORD2
