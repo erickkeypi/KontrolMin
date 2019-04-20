@@ -1,11 +1,18 @@
 /*
-kontrolMin library
-Is part of a personal project
-Can be used to control an arduino with simple strings commands
-Supports value arguments sent along with the command
+Copyright 2019 Erick Rafael Garcia Martinez
 
-Written by Erick Rafael Garcia Martinez
-Magneto license (π) 3000BC-3000AC. All wrigths reserved
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
 last revision april/19/2019
 */
 
