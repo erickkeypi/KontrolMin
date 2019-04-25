@@ -23,7 +23,6 @@ KontrolMin::KontrolMin(){
   data ="";
   recibiendo = false;
   recibido = false;
-  endTransmitionCharacter = '\n';
 }
 
 void KontrolMin::update(char s){
@@ -37,7 +36,7 @@ void KontrolMin::update(char s){
     data += s;
   }
 
-  if(s == endTransmitionCharacter){
+  if(s == '}'){
     recibiendo=false;
     recibido = true;
   }
@@ -90,7 +89,37 @@ void KontrolMin::addListener(String etiqueta, void(fc)(int)){
   }
 }
 
+void KontrolMin::addListener(String etiqueta, void(fc)(unsigned int)){
+  if(recibido){
+    int o1 = data.indexOf('{');
+    int o2 = data.indexOf(':');
+    int o3 = data.indexOf('}');
+    if(o1 != -1 && o2 != -1 && o3 != -1){
+      if(data.substring(o1+1,o2) == etiqueta){
+        int datos = data.substring(o2+1,o3).toInt();
+        data.remove(o1,o3-o1+1);
+        fc(datos);
+      }
+    }
+  }
+}
+
 void KontrolMin::addListener(String etiqueta, void(fc)(long)){
+  if(recibido){
+    int o1 = data.indexOf('{');
+    int o2 = data.indexOf(':');
+    int o3 = data.indexOf('}');
+    if(o1 != -1 && o2 != -1 && o3 != -1){
+      if(data.substring(o1+1,o2) == etiqueta){
+        long datos = data.substring(o2+1,o3).toInt();
+        data.remove(o1,o3-o1+1);
+        fc(datos);
+      }
+    }
+  }
+}
+
+void KontrolMin::addListener(String etiqueta, void(fc)(unsigned long)){
   if(recibido){
     int o1 = data.indexOf('{');
     int o2 = data.indexOf(':');
@@ -135,8 +164,36 @@ void KontrolMin::addListener(String etiqueta, void(fc)(boolean)){
   }
 }
 
-void KontrolMin::setEndTransmitionCharacter(char l){
-  endTransmitionCharacter = l;
+String KontrolMin::indication(String etiqueta){
+  return "{" + etiqueta + "}";
+}
+
+String KontrolMin::indication(String etiqueta,String variable){
+  return "{" + etiqueta + ":" + variable + "}";
+}
+
+String KontrolMin::indication(String etiqueta,int variable){
+  return "{" + etiqueta + ":" + variable + "}";
+}
+
+String KontrolMin::indication(String etiqueta,unsigned int variable){
+  return "{" + etiqueta + ":" + variable + "}";
+}
+
+String KontrolMin::indication(String etiqueta,long variable){
+  return "{" + etiqueta + ":" + variable + "}";
+}
+
+String KontrolMin::indication(String etiqueta,unsigned long variable){
+  return "{" + etiqueta + ":" + variable + "}";
+}
+
+String KontrolMin::indication(String etiqueta,boolean variable){
+  return "{" + etiqueta + ":" + variable + "}";
+}
+
+String KontrolMin::indication(String etiqueta,float variable){
+  return "{" + etiqueta + ":" + variable + "}";
 }
 
 void KontrolMin::flush(){

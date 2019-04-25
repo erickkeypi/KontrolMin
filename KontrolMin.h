@@ -24,7 +24,6 @@ class KontrolMin {
 
 private:
   String data;
-  char endTransmitionCharacter;
   boolean recibiendo, recibido;
 
 public:
@@ -35,9 +34,18 @@ public:
   void addListener(String,void(fc)(String));
   void addListener(String,void(fc)(boolean));
   void addListener(String,void(fc)(int));
+  void addListener(String,void(fc)(unsigned int));
   void addListener(String,void(fc)(long));
+  void addListener(String,void(fc)(unsigned long));
   void addListener(String,void(fc)(float));
-  void setEndTransmitionCharacter(char);
+  String indication(String);
+  String indication(String,String);
+  String indication(String,boolean);
+  String indication(String,int);
+  String indication(String,unsigned int);
+  String indication(String,long);
+  String indication(String,unsigned long);
+  String indication(String,float);
   void flush();
 };
 #endif
