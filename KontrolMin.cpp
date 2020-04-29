@@ -19,7 +19,7 @@ last revision april/19/2019
 #include "KontrolMin.h"
 
 KontrolMin::KontrolMin(){
-  // data.reserve(20);
+  data.reserve(100);
   data ="";
   recibiendo = false;
   recibido = false;
