@@ -85,7 +85,7 @@ void KontrolMin::addListener(char _etiqueta[], void(fc)(void)){
 }
 
 void KontrolMin::addListener(char _etiqueta[], void(fc)(int)){
-  if(recibido){
+    if(recibido){
     if(index1 != -1 && index2 != -1 && index3 != -1){
       if(compareCommand(_etiqueta,index1,index2)){
         extractArgs(index2,index3);
@@ -107,6 +107,7 @@ void KontrolMin::addListener(char _etiqueta[], void(fc)(unsigned int)){
     }
   }
 }
+
 void KontrolMin::addListener(char _etiqueta[], void(fc)(bool)){
   if(recibido){
     if(index1 != -1 && index2 != -1 && index3 != -1){
@@ -118,6 +119,7 @@ void KontrolMin::addListener(char _etiqueta[], void(fc)(bool)){
     }
   }
 }
+
 void KontrolMin::addListener(char _etiqueta[], void(fc)(float)){
   if(recibido){
     if(index1 != -1 && index2 != -1 && index3 != -1){
@@ -129,6 +131,7 @@ void KontrolMin::addListener(char _etiqueta[], void(fc)(float)){
     }
   }
 }
+
 void KontrolMin::addListener(char _etiqueta[], void(fc)(String)){
   if(recibido){
     if(index1 != -1 && index2 != -1 && index3 != -1){
@@ -140,6 +143,7 @@ void KontrolMin::addListener(char _etiqueta[], void(fc)(String)){
     }
   }
 }
+
 void KontrolMin::addListener(char _etiqueta[], void(fc)(char[])){
   if(recibido){
     if(index1 != -1 && index2 != -1 && index3 != -1){
@@ -151,38 +155,73 @@ void KontrolMin::addListener(char _etiqueta[], void(fc)(char[])){
     }
   }
 }
-// String KontrolMin::indication(String etiqueta){
-//   return "{" + etiqueta + "}";
-// }
-//
-// String KontrolMin::indication(String etiqueta,String variable){
-//   return "{" + etiqueta + ":" + variable + "}";
-// }
-//
-// String KontrolMin::indication(String etiqueta,int variable){
-//   return "{" + etiqueta + ":" + variable + "}";
-// }
-//
-// String KontrolMin::indication(String etiqueta,unsigned int variable){
-//   return "{" + etiqueta + ":" + variable + "}";
-// }
-//
-// String KontrolMin::indication(String etiqueta,long variable){
-//   return "{" + etiqueta + ":" + variable + "}";
-// }
-//
-// String KontrolMin::indication(String etiqueta,unsigned long variable){
-//   return "{" + etiqueta + ":" + variable + "}";
-// }
-//
-// String KontrolMin::indication(String etiqueta,boolean variable){
-//   return "{" + etiqueta + ":" + variable + "}";
-// }
-//
-// String KontrolMin::indication(String etiqueta,float variable){
-//   return "{" + etiqueta + ":" + variable + "}";
-// }
-//
+
+char *KontrolMin::indication(char _etiqueta[]){
+  indi[0]=0;
+  strcat(indi,"{");
+  strcat(indi,_etiqueta);
+  strcat(indi,"}");
+  return indi;
+}
+
+char *KontrolMin::indication(char _etiqueta[], char _arg[]){
+  indi[0]=0;
+  strcat(indi,"{");
+  strcat(indi,_etiqueta);
+  strcat(indi,":");
+  strcat(indi,_arg);
+  strcat(indi,"}");
+  return indi;
+}
+
+char *KontrolMin::indication(char _etiqueta[], bool _arg){
+  char buff[3];
+  indi[0]=0;
+  strcat(indi,"{");
+  strcat(indi,_etiqueta);
+  strcat(indi,":");
+  itoa(_arg,buff,10);
+  strcat(indi,buff);
+  strcat(indi,"}");
+  return indi;
+}
+
+char *KontrolMin::indication(char _etiqueta[], int _arg){
+  char buff[12];
+  indi[0]=0;
+  strcat(indi,"{");
+  strcat(indi,_etiqueta);
+  strcat(indi,":");
+  itoa(_arg,buff,10);
+  strcat(indi,buff);
+  strcat(indi,"}");
+  return indi;
+}
+
+char *KontrolMin::indication(char _etiqueta[], unsigned int _arg){
+  char buff[12];
+  indi[0]=0;
+  strcat(indi,"{");
+  strcat(indi,_etiqueta);
+  strcat(indi,":");
+  utoa(_arg,buff,10);
+  strcat(indi,buff);
+  strcat(indi,"}");
+  return indi;
+}
+
+char *KontrolMin::indication(char _etiqueta[], float _arg){
+  char buff[12];
+  indi[0]=0;
+  strcat(indi,"{");
+  strcat(indi,_etiqueta);
+  strcat(indi,":");
+  sprintf(buff,"%f",_arg);
+  strcat(indi,buff);
+  strcat(indi,"}");
+  return indi;
+}
+
 void KontrolMin::flush(){
   for (int i=0;i<100;i++){
     data[i]=0;

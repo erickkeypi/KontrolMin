@@ -24,6 +24,7 @@ class KontrolMin {
 
 private:
   char data[100];
+  char indi[100];
   char command[20];
   char arg[80];
   bool recibiendo, recibido;
@@ -42,15 +43,12 @@ public:
   void addListener(char[],void(fc)(String));
   void addListener(char[],void(fc)(char[]));
 
-  char* indication(char[]);
-  // String indication(String);
-  // String indication(String,String);
-  // String indication(String,boolean);
-  // String indication(String,int);
-  // String indication(String,unsigned int);
-  // String indication(String,long);
-  // String indication(String,unsigned long);
-  // String indication(String,float);
+  char *indication(char[]);
+  char *indication(char[],char[]);
+  char *indication(char[],bool);
+  char *indication(char[],int);
+  char *indication(char[],unsigned int);
+  char *indication(char[],float);
   void flush();
 };
 #endif
