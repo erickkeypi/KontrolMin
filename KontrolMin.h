@@ -23,29 +23,30 @@ last revision april/19/2019
 class KontrolMin {
 
 private:
-  String data;
-  boolean recibiendo, recibido;
+  char data[100];
+  bool recibiendo, recibido;
 
 public:
   KontrolMin();
   void update(char);
-  String getData();
-  void addListener(String,void(fc)(void));
-  void addListener(String,void(fc)(String));
-  void addListener(String,void(fc)(boolean));
-  void addListener(String,void(fc)(int));
-  void addListener(String,void(fc)(unsigned int));
-  void addListener(String,void(fc)(long));
-  void addListener(String,void(fc)(unsigned long));
-  void addListener(String,void(fc)(float));
-  String indication(String);
-  String indication(String,String);
-  String indication(String,boolean);
-  String indication(String,int);
-  String indication(String,unsigned int);
-  String indication(String,long);
-  String indication(String,unsigned long);
-  String indication(String,float);
+
+  // char* getData();
+  void addListener(char[],void(fc)(void));
+  // void addListener(String,void(fc)(String));
+  // void addListener(String,void(fc)(boolean));
+  // void addListener(String,void(fc)(int));
+  // void addListener(String,void(fc)(unsigned int));
+  // void addListener(String,void(fc)(long));
+  // void addListener(String,void(fc)(unsigned long));
+  // void addListener(String,void(fc)(float));
+  // String indication(String);
+  // String indication(String,String);
+  // String indication(String,boolean);
+  // String indication(String,int);
+  // String indication(String,unsigned int);
+  // String indication(String,long);
+  // String indication(String,unsigned long);
+  // String indication(String,float);
   void flush();
 };
 #endif
