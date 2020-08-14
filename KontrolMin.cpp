@@ -31,156 +31,126 @@ void KontrolMin::update(char s){
     recibido=false;
     flush();
     index=0;
+    index1 = index2 = index3 = -1;
   }
 
   if(recibiendo){
     data[index]=s;
+
+    if(s=='{'){
+      index1=index;
+    }
+    if(s==':'){
+      index2=index;
+    }
+    if(s=='}'){
+      index3=index;
+    }
+
     index++;
   }
 
-  if(s == '}'){
+  if(s == '}' || index >=100){
     recibiendo=false;
     recibido = true;
-    Serial.print(F("Recibido: "));
-    for (int i=0;i<100;i++){
-      Serial.print(data[i]);
-    }
-    Serial.println();
   }
+}
+
+bool KontrolMin::compareCommand(char _etiqueta[],int _o1, int _o2){//comparacion de comando
+  char *d=strchr(data,'{');//inicio del comando
+  d++;
+  strncpy(command,d,_o2-_o1);//copiamos el comando
+  command[_o2-_o1-1]=0;
+  bool res = strcmp(command,_etiqueta)==0;
+  command[0]=0;
+  return res;
+}
+
+void KontrolMin::extractArgs(int _o2, int _o3){
+  char *d=strchr(data,':');//inicio del comando
+  d++;
+  strncpy(arg,d,_o3-_o2);//copiamos el comando
+  arg[_o3-_o2-1]=0;
 }
 
 void KontrolMin::addListener(char _etiqueta[], void(fc)(void)){
   if(recibido){
-    int o1 = -1;
-    int o2 = -1;
-    for(int i=0;i<100;i++){
-      if(data[i] == '{'){
-        o1=i;
+    if(index1 != -1 && index3 != -1){
+      if(compareCommand(_etiqueta,index1,index3)){
+        fc();
+        flush();
       }
-      if(data[i] == '}'){
-        o2=i;
-      }
-    }
-    char *d=strchr(data,'{');
-    d++;
-    d[o2-o1-1]=0;
-    Serial.println(d);
-    while(1);
-    if(o1 != -1 && o2 != -1){
-      // Serial.println(data.substring(o1,o2-o1));
-      // if(data.substring(o1+1,o2) == etiqueta){
-      //   fc();
-      //   data.remove(o1,o2-o1+1);
-      // }
     }
   }
 }
 
-// void KontrolMin::addListener(String etiqueta, void(fc)(String)){
-//   if(recibido){
-//     int o1 = data.indexOf('{');
-//     int o2 = data.indexOf(':');
-//     int o3 = data.indexOf('}');
-//     if(o1 != -1 && o2 != -1 && o3 != -1){
-//       if(data.substring(o1+1,o2) == etiqueta){
-//         String datos = data.substring(o2+1,o3);
-//         data.remove(o1,o3-o1+1);
-//         fc(datos);
-//       }
-//     }
-//   }
-// }
-//
-// void KontrolMin::addListener(String etiqueta, void(fc)(int)){
-//   if(recibido){
-//     int o1 = data.indexOf('{');
-//     int o2 = data.indexOf(':');
-//     int o3 = data.indexOf('}');
-//     if(o1 != -1 && o2 != -1 && o3 != -1){
-//       if(data.substring(o1+1,o2) == etiqueta){
-//         int datos = data.substring(o2+1,o3).toInt();
-//         data.remove(o1,o3-o1+1);
-//         fc(datos);
-//       }
-//     }
-//   }
-// }
-//
-// void KontrolMin::addListener(String etiqueta, void(fc)(unsigned int)){
-//   if(recibido){
-//     int o1 = data.indexOf('{');
-//     int o2 = data.indexOf(':');
-//     int o3 = data.indexOf('}');
-//     if(o1 != -1 && o2 != -1 && o3 != -1){
-//       if(data.substring(o1+1,o2) == etiqueta){
-//         int datos = data.substring(o2+1,o3).toInt();
-//         data.remove(o1,o3-o1+1);
-//         fc(datos);
-//       }
-//     }
-//   }
-// }
-//
-// void KontrolMin::addListener(String etiqueta, void(fc)(long)){
-//   if(recibido){
-//     int o1 = data.indexOf('{');
-//     int o2 = data.indexOf(':');
-//     int o3 = data.indexOf('}');
-//     if(o1 != -1 && o2 != -1 && o3 != -1){
-//       if(data.substring(o1+1,o2) == etiqueta){
-//         long datos = data.substring(o2+1,o3).toInt();
-//         data.remove(o1,o3-o1+1);
-//         fc(datos);
-//       }
-//     }
-//   }
-// }
-//
-// void KontrolMin::addListener(String etiqueta, void(fc)(unsigned long)){
-//   if(recibido){
-//     int o1 = data.indexOf('{');
-//     int o2 = data.indexOf(':');
-//     int o3 = data.indexOf('}');
-//     if(o1 != -1 && o2 != -1 && o3 != -1){
-//       if(data.substring(o1+1,o2) == etiqueta){
-//         long datos = data.substring(o2+1,o3).toInt();
-//         data.remove(o1,o3-o1+1);
-//         fc(datos);
-//       }
-//     }
-//   }
-// }
-//
-// void KontrolMin::addListener(String etiqueta, void(fc)(float)){
-//   if(recibido){
-//     int o1 = data.indexOf('{');
-//     int o2 = data.indexOf(':');
-//     int o3 = data.indexOf('}');
-//     if(o1 != -1 && o2 != -1 && o3 != -1){
-//       if(data.substring(o1+1,o2) == etiqueta){
-//         float datos = data.substring(o2+1,o3).toFloat();
-//         data.remove(o1,o3-o1+1);
-//         fc(datos);
-//       }
-//     }
-//   }
-// }
-//
-// void KontrolMin::addListener(String etiqueta, void(fc)(boolean)){
-//   if(recibido){
-//     int o1 = data.indexOf('{');
-//     int o2 = data.indexOf(':');
-//     int o3 = data.indexOf('}');
-//     if(o1 != -1 && o2 != -1 && o3 != -1){
-//       if(data.substring(o1+1,o2) == etiqueta){
-//         boolean datos = data.substring(o2+1,o3).toInt();
-//         data.remove(o1,o3-o1+1);
-//         fc(datos);
-//       }
-//     }
-//   }
-// }
-//
+void KontrolMin::addListener(char _etiqueta[], void(fc)(int)){
+  if(recibido){
+    if(index1 != -1 && index2 != -1 && index3 != -1){
+      if(compareCommand(_etiqueta,index1,index2)){
+        extractArgs(index2,index3);
+        fc(atoi(arg));
+        flush();
+      }
+    }
+  }
+}
+
+void KontrolMin::addListener(char _etiqueta[], void(fc)(unsigned int)){
+  if(recibido){
+    if(index1 != -1 && index2 != -1 && index3 != -1){
+      if(compareCommand(_etiqueta,index1,index2)){
+        extractArgs(index2,index3);
+        fc(atoi(arg));
+        flush();
+      }
+    }
+  }
+}
+void KontrolMin::addListener(char _etiqueta[], void(fc)(bool)){
+  if(recibido){
+    if(index1 != -1 && index2 != -1 && index3 != -1){
+      if(compareCommand(_etiqueta,index1,index2)){
+        extractArgs(index2,index3);
+        fc(atoi(arg));
+        flush();
+      }
+    }
+  }
+}
+void KontrolMin::addListener(char _etiqueta[], void(fc)(float)){
+  if(recibido){
+    if(index1 != -1 && index2 != -1 && index3 != -1){
+      if(compareCommand(_etiqueta,index1,index2)){
+        extractArgs(index2,index3);
+        fc(atof(arg));
+        flush();
+      }
+    }
+  }
+}
+void KontrolMin::addListener(char _etiqueta[], void(fc)(String)){
+  if(recibido){
+    if(index1 != -1 && index2 != -1 && index3 != -1){
+      if(compareCommand(_etiqueta,index1,index2)){
+        extractArgs(index2,index3);
+        fc(arg);
+        flush();
+      }
+    }
+  }
+}
+void KontrolMin::addListener(char _etiqueta[], void(fc)(char[])){
+  if(recibido){
+    if(index1 != -1 && index2 != -1 && index3 != -1){
+      if(compareCommand(_etiqueta,index1,index2)){
+        extractArgs(index2,index3);
+        fc(arg);
+        flush();
+      }
+    }
+  }
+}
 // String KontrolMin::indication(String etiqueta){
 //   return "{" + etiqueta + "}";
 // }
@@ -219,8 +189,3 @@ void KontrolMin::flush(){
   }
   recibido = false;
 }
-//
-// char* KontrolMin::getData(){
-//   return data;
-// }
-//

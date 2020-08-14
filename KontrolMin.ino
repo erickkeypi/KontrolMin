@@ -15,6 +15,11 @@ void loop(){
     kontrol.update(Serial.read());
   }
   kontrol.addListener("lol",test);
+  kontrol.addListener("pop",test2);
+}
+void test2(String arg){
+  Serial.print("resultado :");
+  Serial.println(arg);
 }
 
 void test(){

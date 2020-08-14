@@ -24,21 +24,25 @@ class KontrolMin {
 
 private:
   char data[100];
+  char command[20];
+  char arg[80];
   bool recibiendo, recibido;
+  bool compareCommand(char[],int,int);
+  void extractArgs(int,int);
+  int index1,index2, index3;
 
 public:
   KontrolMin();
   void update(char);
-
-  // char* getData();
   void addListener(char[],void(fc)(void));
-  // void addListener(String,void(fc)(String));
-  // void addListener(String,void(fc)(boolean));
-  // void addListener(String,void(fc)(int));
-  // void addListener(String,void(fc)(unsigned int));
-  // void addListener(String,void(fc)(long));
-  // void addListener(String,void(fc)(unsigned long));
-  // void addListener(String,void(fc)(float));
+  void addListener(char[],void(fc)(int));
+  void addListener(char[],void(fc)(unsigned int));
+  void addListener(char[],void(fc)(bool));
+  void addListener(char[],void(fc)(float));
+  void addListener(char[],void(fc)(String));
+  void addListener(char[],void(fc)(char[]));
+
+  char* indication(char[]);
   // String indication(String);
   // String indication(String,String);
   // String indication(String,boolean);
