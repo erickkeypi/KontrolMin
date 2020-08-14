@@ -23,29 +23,32 @@ last revision april/19/2019
 class KontrolMin {
 
 private:
-  String data;
-  boolean recibiendo, recibido;
+  char data[100];
+  char indi[100];
+  char command[20];
+  char arg[80];
+  bool recibiendo, recibido;
+  bool compareCommand(char[],int,int);
+  void extractArgs(int,int);
+  int index1,index2, index3;
 
 public:
   KontrolMin();
   void update(char);
-  String getData();
-  void addListener(String,void(fc)(void));
-  void addListener(String,void(fc)(String));
-  void addListener(String,void(fc)(boolean));
-  void addListener(String,void(fc)(int));
-  void addListener(String,void(fc)(unsigned int));
-  void addListener(String,void(fc)(long));
-  void addListener(String,void(fc)(unsigned long));
-  void addListener(String,void(fc)(float));
-  String indication(String);
-  String indication(String,String);
-  String indication(String,boolean);
-  String indication(String,int);
-  String indication(String,unsigned int);
-  String indication(String,long);
-  String indication(String,unsigned long);
-  String indication(String,float);
+  void addListener(char[],void(fc)(void));
+  void addListener(char[],void(fc)(int));
+  void addListener(char[],void(fc)(unsigned int));
+  void addListener(char[],void(fc)(bool));
+  void addListener(char[],void(fc)(float));
+  void addListener(char[],void(fc)(String));
+  void addListener(char[],void(fc)(char[]));
+
+  char *indication(char[]);
+  char *indication(char[],char[]);
+  char *indication(char[],bool);
+  char *indication(char[],int);
+  char *indication(char[],unsigned int);
+  char *indication(char[],float);
   void flush();
 };
 #endif
